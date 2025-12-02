@@ -48,10 +48,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/kareemfarid/nested-learning-optimizer"
-Documentation = "https://github.com/kareemfarid/nested-learning-optimizer#readme"
-Repository = "https://github.com/kareemfarid/nested-learning-optimizer"
-Issues = "https://github.com/kareemfarid/nested-learning-optimizer/issues"
+Homepage = "https://github.com/Kareemfarid/nested-learning-optimizer"
+Documentation = "https://github.com/Kareemfarid/nested-learning-optimizer#readme"
+Repository = "https://github.com/Kareemfarid/nested-learning-optimizer"
+Issues = "https://github.com/Kareemfarid/nested-learning-optimizer/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

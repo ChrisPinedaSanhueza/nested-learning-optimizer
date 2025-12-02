@@ -65,7 +65,7 @@ pip install nested-learning-optimizer
 Or from source:
 
 ```bash
-git clone https://github.com/kareemfarid/nested-learning-optimizer.git
+git clone https://github.com/Kareemfarid/nested-learning-optimizer.git
 cd nested-learning-optimizer
 pip install -e .
 ```
@@ -276,7 +276,7 @@ If you use this optimizer in your research, please cite:
 ## Author
 
 **Kareem Farid**
-- GitHub: [@kareemfarid](https://github.com/kareemfarid)
+- GitHub: [@Kareemfarid](https://github.com/Kareemfarid)
 - Twitter: [@kareemfarid](https://twitter.com/kareemfarid)
 
 ## License

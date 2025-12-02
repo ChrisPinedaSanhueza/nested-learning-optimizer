@@ -5,7 +5,7 @@ Contributions are welcome! Here's how to help.
 ## Development Setup
 
 ```bash
-git clone https://github.com/kareemfarid/nested-learning-optimizer.git
+git clone https://github.com/Kareemfarid/nested-learning-optimizer.git
 cd nested-learning-optimizer
 pip install -e ".[dev]"
 ```

